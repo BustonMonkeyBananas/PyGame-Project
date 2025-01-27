@@ -3,7 +3,12 @@ import sys
 from random import *
 
 import pygame
+import pygame_widgets
+from pygame_widgets.button import Button
 
+from settings import settings
+
+from settings import settings, language, volume, difficult
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -39,28 +44,22 @@ player_group = pygame.sprite.Group()
 
 
 def start_screen():
-    # intro_text = ["Гранжеградские приключения", ""]
-
     fon = pygame.transform.scale(load_image('Start.png'), (width, height))
     screen.blit(fon, (0, 0))
-    # font = pygame.font.Font(None, 30)
-    # text_coord = 50
-    # for line in intro_text:
-    #     string_rendered = font.render(line, 1, pygame.Color('black'))
-    #     intro_rect = string_rendered.get_rect()
-    #     text_coord += 10
-    #     intro_rect.top = text_coord
-    #     intro_rect.x = 10
-    #     text_coord += intro_rect.height
-    #     screen.blit(string_rendered, intro_rect)
+    settings_btn = Button(screen,200,120,50,50, margin=20, inactiveColour=(67, 69, 74),
+                          hoverColour=(43, 45, 48), pressedColour=(255, 255, 255), radius=20, onClick=settings)
+    start_btn = Button(screen, 1375, 800, 300, 120, margin=20, inactiveColour=(240, 20, 20),
+                       hoverColour=(87, 0, 0), pressedColour=(0, 0, 0), radius=20, text="Начать",
+                       textColour=(255, 255, 255), font=pygame.font.SysFont("Arial Black", 50))
+    load_image("settings.png")
 
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            elif event.type == pygame.KEYDOWN or \
-                    event.type == pygame.MOUSEBUTTONDOWN:
-                return
+            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                pass
+        pygame_widgets.update(pygame.event.get())
         pygame.display.flip()
         clock.tick(60)
 
