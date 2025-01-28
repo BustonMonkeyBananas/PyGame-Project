@@ -1,6 +1,6 @@
-<header style="color:red;font-weight:700;font-size:25px;">
+<span style="color:red;font-weight:700;font-size:25px;">
     Гранжеградские приключения
-</header>
+</span>
 
 Сюжетная игра, действия которой разворачиваются в Великом Гранжеграде.
 
