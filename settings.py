@@ -3,10 +3,10 @@ from tkinter import ttk, StringVar
 
 from languages import languages
 
+
 volume = 50
 language = "Russian"
 difficult = "Лёгкая"
-
 
 def settings():
     global volume, language, difficult
@@ -45,5 +45,6 @@ def settings():
     vol = ttk.Scale(wind, from_=0, to=100, orient="vertical", value=50)
     canvas.create_window(520, 170, height=200, window=vol)
     volume = vol.get()
+
 
     wind.mainloop()

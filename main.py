@@ -1,14 +1,14 @@
 import os
 import sys
-from random import *
+import sqlite3
 
 import pygame
 import pygame_widgets
 from pygame_widgets.button import Button
 
 from settings import settings
+from login import login
 
-from settings import settings, language, volume, difficult
 
 def load_image(name, colorkey=None):
     fullname = os.path.join('data', name)
@@ -30,6 +30,12 @@ def load_image(name, colorkey=None):
 pygame.init()
 size = width, height = 1920, 1080
 screen = pygame.display.set_mode(size)
+start = False
+
+account = {"name": "", "password": "", "skin": 0, "difficulty": 0, "volume": 50, "level": 0}
+con = sqlite3.connect("grangegrad.sqlite")
+cur = con.cursor()
+
 all_sprites = pygame.sprite.Group()
 tile_width = tile_height = 50
 tile_images = {
@@ -42,27 +48,47 @@ tile_group = pygame.sprite.Group()
 wall_group = pygame.sprite.Group()
 player_group = pygame.sprite.Group()
 
+def acc_quit():
+    cur.execute('''UPDATE game SET loged = 0''')
+    con.commit()
 
 def start_screen():
+    global start
+    start = False
+    sql = '''SELECT loged FROM game'''
     fon = pygame.transform.scale(load_image('Start.png'), (width, height))
     screen.blit(fon, (0, 0))
-    settings_btn = Button(screen,200,120,50,50, margin=20, inactiveColour=(67, 69, 74),
-                          hoverColour=(43, 45, 48), pressedColour=(255, 255, 255), radius=20, onClick=settings)
+    settings_btn = Button(screen,200,120,90,50, margin=20, inactiveColour=(67, 69, 74),
+                          hoverColour=(43, 45, 48), pressedColour=(255, 255, 255), radius=20, onClick=settings,
+                          text="Настройки")
     start_btn = Button(screen, 1375, 800, 300, 120, margin=20, inactiveColour=(240, 20, 20),
                        hoverColour=(87, 0, 0), pressedColour=(0, 0, 0), radius=20, text="Начать",
-                       textColour=(255, 255, 255), font=pygame.font.SysFont("Arial Black", 50))
-    load_image("settings.png")
+                       textColour=(255, 255, 255), font=pygame.font.SysFont("Arial Black", 50), onClick=begin)
+
+    acc_btn = Button(screen,1630,120,90,50, margin=20, inactiveColour=(20, 180, 20),
+                     hoverColour=(10, 120, 10), pressedColour=(255, 255, 255), radius=20, onClick=acc_quit,
+                     text="Аккаунт")
 
     while True:
+        if cur.execute(sql).fetchall()[0][0] == 1:
+            acc_btn.show()
+        else:
+            acc_btn.hide()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
-            elif event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
-                pass
+            elif start:
+                return
         pygame_widgets.update(pygame.event.get())
         pygame.display.flip()
         clock.tick(60)
 
+def begin():
+    global start
+    sql = '''SELECT loged FROM game'''
+    if cur.execute(sql).fetchall()[0][0] == 0:
+        login()
+    start = True
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, typ, x, y):
