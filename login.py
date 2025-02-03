@@ -79,7 +79,7 @@ def sign_in():
     name, password = name_line.get(), password_line.get()
     done_btn = ttk.Button(text="Войти")
     sigcan.create_window(312, 250, window=done_btn)
-    done_btn.configure(command=done)
+    done_btn.configure(command=sign)
 
 def login():
     register = ttk.Button(text="Регистрация", command=registration)
