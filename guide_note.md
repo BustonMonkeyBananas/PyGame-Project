@@ -4,10 +4,19 @@
 
 ###### ![img.png](data/btns.png)
 
-### Взаимодействие:
+### Взаимодействие с объектами и персонажами:
 
 ###### ![enter.png](data/enter.png)
 ###### ![space.jpg](data/space.jpg)
+
+### Взаимодействие с виртуальной гитарой:
+
+![guitar_guide.png](data/guitar_guide.png)
+
+
+### Взаимодействие с виртуальными барабанами:
+
+![guitar_guide.png](data/drums_guide.png)
 
 ## Элементы настроек:
 
