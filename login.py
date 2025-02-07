@@ -65,7 +65,7 @@ def sign_in():
     lcanvas.destroy()
     sigcan = tk.Canvas(height=312, width=624, bg="#1e1f22")
     sigcan.pack()
-    sigcan.create_text(312, 20, text="Регистрация", justify="center", fill="red", font="Elephant 20")
+    sigcan.create_text(312, 20, text="Вход", justify="center", fill="red", font="Elephant 20")
 
     name_line = tk.Entry(log, width=50)
     password_line = tk.Entry(log, width=50)
